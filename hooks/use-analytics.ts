@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
+import { ANALYTICS_CONFIG } from "@/lib/analytics-config"
 
 // Tipos para los eventos de tracking
 interface FormSubmitData {
@@ -38,7 +39,7 @@ export const useAnalytics = () => {
   const trackGoogleAdsConversion = useCallback((conversionLabel: string, value?: number) => {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "conversion", {
-        send_to: `AW-CONVERSION_ID/${conversionLabel}`,
+        send_to: `${ANALYTICS_CONFIG.GOOGLE_ADS_ID}/${conversionLabel}`,
         value: value || 1,
         currency: "CLP",
       })

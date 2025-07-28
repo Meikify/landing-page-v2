@@ -9,6 +9,16 @@ export const ANALYTICS_CONFIG = {
   // Google Ads
   GOOGLE_ADS_ID: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-CONVERSION_ID",
 
+  // Google Tag Manager
+  GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || "GTM-ID",
+
+  // Chatwoot
+  CHATWOOT_TOKEN: process.env.NEXT_PUBLIC_CHATWOOT_TOKEN || "CHATWOOT_TOKEN",
+
+  // Credenciales
+  ANALYTICS_USER: process.env.NEXT_PUBLIC_ANALYTICS_USER || "user",
+  ANALYTICS_PASSWORD: process.env.NEXT_PUBLIC_ANALYTICS_PASSWORD || "password",
+
   // Conversion Labels para Google Ads
   CONVERSION_LABELS: {
     FORM_SUBMIT: "form_submit_label",

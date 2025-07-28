@@ -423,10 +423,6 @@ export default function MeikifyWebsite() {
       '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>Enviando...</div>'
     submitButton.disabled = true
 
-    const API_USERNAME = "admin"
-    const API_PASSWORD = "laCLAVEes123!"
-    const basicAuth = "Basic " + Buffer.from(`${API_USERNAME}:${API_PASSWORD}`).toString("base64")
-
    /* showNotification("success", "¡Solicitud enviada!", "")
 
     // Resetear reCAPTCHA
@@ -436,11 +432,10 @@ export default function MeikifyWebsite() {
     setRecaptchaToken(null)*/
 
     try {
-      const response = await fetch("https://n8nwebhook.meikify.cl/webhook/leads-diagnostico", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": basicAuth,
         },
         body: JSON.stringify(data),
       })
