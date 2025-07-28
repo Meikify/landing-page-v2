@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
+import { ANALYTICS_CONFIG } from "@/lib/analytics-config"
 
 // Tipos para los eventos de tracking
 interface FormSubmitData {
@@ -34,16 +35,6 @@ export const useAnalytics = () => {
     }
   }, [])
 
-  // Google Ads conversion tracking
-  const trackGoogleAdsConversion = useCallback((conversionLabel: string, value?: number) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "conversion", {
-        send_to: `AW-CONVERSION_ID/${conversionLabel}`,
-        value: value || 1,
-        currency: "CLP",
-      })
-    }
-  }, [])
 
   // Tracking functions
   const trackPageView = useCallback(
@@ -77,10 +68,8 @@ export const useAnalytics = () => {
         currency: "CLP",
       })
 
-      // Google Ads
-      trackGoogleAdsConversion("form_submit", data.lead_value || 150)
     },
-    [trackGoogleEvent, trackFacebookEvent, trackGoogleAdsConversion],
+    [trackGoogleEvent, trackFacebookEvent],
   )
 
   const trackCTAClick = useCallback(
@@ -112,10 +101,8 @@ export const useAnalytics = () => {
         content_category: source,
       })
 
-      // Google Ads
-      trackGoogleAdsConversion("whatsapp_click")
     },
-    [trackGoogleEvent, trackFacebookEvent, trackGoogleAdsConversion],
+    [trackGoogleEvent, trackFacebookEvent],
   )
 
   const trackDemoRequest = useCallback(
@@ -130,10 +117,8 @@ export const useAnalytics = () => {
         content_name: demoType,
       })
 
-      // Google Ads
-      trackGoogleAdsConversion("demo_request")
     },
-    [trackGoogleEvent, trackFacebookEvent, trackGoogleAdsConversion],
+    [trackGoogleEvent, trackFacebookEvent],
   )
 
   const trackSectionView = useCallback(
