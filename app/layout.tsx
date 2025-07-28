@@ -43,7 +43,6 @@ export default function RootLayout({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
-          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');
         `}} />
         <script dangerouslySetInnerHTML={{ __html: `
           (function (w, d, s, l, i) {

@@ -6,9 +6,6 @@ export const ANALYTICS_CONFIG = {
   // Facebook Pixel
   FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || "FB_PIXEL_ID",
 
-  // Google Ads
-  GOOGLE_ADS_ID: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-CONVERSION_ID",
-
   // Google Tag Manager
   GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || "GTM-ID",
 
@@ -19,14 +16,6 @@ export const ANALYTICS_CONFIG = {
   ANALYTICS_USER: process.env.NEXT_PUBLIC_ANALYTICS_USER || "user",
   ANALYTICS_PASSWORD: process.env.NEXT_PUBLIC_ANALYTICS_PASSWORD || "password",
 
-  // Conversion Labels para Google Ads
-  CONVERSION_LABELS: {
-    FORM_SUBMIT: "form_submit_label",
-    WHATSAPP_CLICK: "whatsapp_click_label",
-    DEMO_REQUEST: "demo_request_label",
-    PHONE_CALL: "phone_call_label",
-    EMAIL_CLICK: "email_click_label",
-  },
 
   // Eventos personalizados
   CUSTOM_EVENTS: {
@@ -68,11 +57,3 @@ export const ANALYTICS_CONFIG = {
   ],
 }
 
-// Valores por defecto para conversiones
-export const DEFAULT_CONVERSION_VALUES = {
-  FORM_SUBMIT: 150,
-  DEMO_REQUEST: 200,
-  WHATSAPP_CLICK: 50,
-  PHONE_CALL: 75,
-  EMAIL_CLICK: 25,
-}
