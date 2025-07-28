@@ -357,64 +357,27 @@ export default function MeikifyWebsite() {
     }
   }, [])
 
-  // Load reCAPTCHA script
+  // Load reCAPTCHA v3 script
   useEffect(() => {
     const script = document.createElement("script")
-    script.src = "https://www.google.com/recaptcha/api.js"
+    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`
     script.async = true
     script.defer = true
     document.head.appendChild(script)
 
     // Cleanup function
     return () => {
-      const existingScript = document.querySelector('script[src="https://www.google.com/recaptcha/api.js"]')
+      const existingScript = document.querySelector(`script[src*="recaptcha/api.js"]`)
       if (existingScript) {
         document.head.removeChild(existingScript)
       }
     }
   }, [])
 
-  // Listen for reCAPTCHA events
-    useEffect(() => {
-      const handleRecaptchaChange = (event: CustomEvent) => {
-        setRecaptchaToken(event.detail)
-      }
-
-      window.addEventListener("recaptcha-change", handleRecaptchaChange as EventListener)
-
-      return () => {
-        window.removeEventListener("recaptcha-change", handleRecaptchaChange as EventListener)
-      }
-    }, [])
-
-  // reCAPTCHA callback function
-    const onRecaptchaChange = (token: string | null) => {
-      setRecaptchaToken(token)
-    }
 
     // Form submission handler
    const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!recaptchaToken) {
-      showNotification(
-        "warning",
-        "Verificación requerida",
-        "Por favor, completa la verificación reCAPTCHA antes de continuar.",
-      )
-      return
-    }
-
-    // Obtener los datos del formulario
-    const formData = new FormData(e.target as HTMLFormElement)
-    const data = {
-      nombre: formData.get("name") as string,
-      correo: formData.get("email") as string,
-      whatsapp: formData.get("whatsapp") as string,
-      empresa: formData.get("company") as string,
-      cargo: formData.get("position") as string,
-      tarea_proceso: formData.get("process") as string,
-    }
 
     // Mostrar estado de carga
     const submitButton = document.querySelector('button[type="submit"]') as HTMLButtonElement
@@ -423,15 +386,23 @@ export default function MeikifyWebsite() {
       '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>Enviando...</div>'
     submitButton.disabled = true
 
-   /* showNotification("success", "¡Solicitud enviada!", "")
-
-    // Resetear reCAPTCHA
-    if (window.grecaptcha) {
-      window.grecaptcha.reset()
-    }
-    setRecaptchaToken(null)*/
-
     try {
+      // Execute reCAPTCHA v3
+      const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'submit'})
+      setRecaptchaToken(token)
+
+      // Obtener los datos del formulario
+      const formData = new FormData(e.target as HTMLFormElement)
+      const data = {
+        nombre: formData.get("name") as string,
+        correo: formData.get("email") as string,
+        whatsapp: formData.get("whatsapp") as string,
+        empresa: formData.get("company") as string,
+        cargo: formData.get("position") as string,
+        tarea_proceso: formData.get("process") as string,
+        recaptcha_token: token,
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -439,14 +410,10 @@ export default function MeikifyWebsite() {
         },
         body: JSON.stringify(data),
       })
+      
       if (response.ok) {
         showNotification("success", "¡Solicitud enviada!", "")
         ;(e.target as HTMLFormElement).reset()
-
-        // Resetear reCAPTCHA
-        if (window.grecaptcha) {
-          window.grecaptcha.reset()
-        }
         setRecaptchaToken(null)
       } else {
         showNotification(
@@ -1379,43 +1346,15 @@ export default function MeikifyWebsite() {
                   />
                 </div>
 
-                {/* reCAPTCHA - Add this before the Submit Button */}
-                <div className="flex justify-center">
-                  <div
-                    className="g-recaptcha"
-                    data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                    data-callback="onRecaptchaChange"
-                  ></div>
-                </div>
 
                 {/* Submit Button */}
                 <div className="pt-4">
                   <Button
                     type="submit"
                     size="lg"
-                    disabled={!recaptchaToken}
-                    className={`
-                      w-full
-                      px-4 sm:px-8
-                      py-3 sm:py-4
-                      text-base sm:text-lg
-                      font-bold
-                      rounded-xl
-                      shadow-xl
-                      hover:shadow-2xl
-                      transition-all duration-300
-                      transform hover:scale-[1.02]
-                      flex items-center justify-center gap-2
-                      ${!recaptchaToken
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
-                      }
-                      text-white
-                    `}
+                    className="w-full px-4 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                     onClick={() => {
-                      if (recaptchaToken) {
-                        analytics.trackCTAClick("Generar diagnóstico con IA", "formulario")
-                      }
+                      analytics.trackCTAClick("Generar diagnóstico con IA", "formulario")
                     }}
                   >
                     <Sparkles className="w-5 h-5" />
@@ -1663,16 +1602,6 @@ export default function MeikifyWebsite() {
         ]}
       />
 
-      {/* reCAPTCHA Global Callback */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.onRecaptchaChange = function(token) {
-              window.dispatchEvent(new CustomEvent('recaptcha-change', { detail: token }));
-            };
-          `,
-        }}
-      />
     </div>
   )
 }
