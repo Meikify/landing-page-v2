@@ -966,7 +966,12 @@ export default function MeikifyWebsite() {
               >
                 <CardContent className="p-8">
                   <div className="text-4xl mb-4 flex justify-center items-center">
-                    <img src={useCase.icon || "/placeholder.svg"} alt="Robot Meikify" className="w-[40px] h-[40px]" />
+                    <img
+                      src={useCase.icon || "/placeholder.svg"}
+                      alt={useCase.title}
+                      loading="lazy"
+                      className="w-[40px] h-[40px]"
+                    />
                   </div>
                   <div className="text-sm font-semibold mb-2 text-center" style={{ color: "#00bce7" }}>
                     {useCase.industry}
@@ -1059,7 +1064,9 @@ export default function MeikifyWebsite() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-start space-x-4 group">
                         <div className="text-3xl group-hover:scale-110 transition-transform duration-300">
-                          {item.icon}
+                          <span role="img" aria-label={item.text}>
+                            {item.icon}
+                          </span>
                         </div>
                         <div className="flex-1">
                           <p className="text-slate-800 font-semibold text-lg leading-tight">{item.text}</p>
@@ -1111,7 +1118,9 @@ export default function MeikifyWebsite() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-start space-x-4 group">
                         <div className="text-3xl group-hover:scale-110 transition-transform duration-300">
-                          {item.icon}
+                          <span role="img" aria-label={item.text}>
+                            {item.icon}
+                          </span>
                         </div>
                         <div className="flex-1">
                           <p className="text-slate-800 font-semibold text-lg leading-tight">{item.text}</p>
@@ -1168,6 +1177,7 @@ export default function MeikifyWebsite() {
                         <img
                           src="/images/joan_toro.jpeg"
                           alt="Joan Toro - Fundador de Meikify"
+                          loading="lazy"
                           className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
                         />
                       </div>
@@ -1437,7 +1447,12 @@ export default function MeikifyWebsite() {
             {/* Logo and Tagline */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src="/images/meikify-logo.webp" alt="Meikify Logo" className="h-10 w-auto object-contain" />
+                <img
+                  src="/images/meikify-logo.webp"
+                  alt="Meikify Logo"
+                  loading="lazy"
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-slate-300 leading-relaxed max-w-sm">
                 Potencia tu equipo con IA y logra nuevos resultados.
@@ -1543,6 +1558,7 @@ export default function MeikifyWebsite() {
                     href="#"
                     onClick={() => handleWhatsAppClick("footer")}
                     className="hover:text-cyan-400 transition-colors"
+                    aria-label="Enviar mensaje WhatsApp al +56 9 5899 5317"
                   >
                     +56 9 5899 5317
                   </a>
@@ -1550,16 +1566,36 @@ export default function MeikifyWebsite() {
 
                 {/* Social Media Icons */}
                 <div className="flex space-x-4 pt-4 text-white">
-                  <a href="https://www.linkedin.com/company/meikifycl/" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://www.linkedin.com/company/meikifycl/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Meikify"
+                  >
                     <FontAwesomeIcon icon={faLinkedin} className="text-cyan-300 hover:text-gray-400 text-2xl" />
                   </a>
-                  <a href="https://www.instagram.com/joan.meikify/" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://www.instagram.com/joan.meikify/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram Meikify"
+                  >
                     <FontAwesomeIcon icon={faInstagram} className="text-cyan-300 hover:text-gray-400 text-2xl" />
                   </a>
-                  <a href="https://www.youtube.com/@joan.meikify" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://www.youtube.com/@joan.meikify"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube Meikify"
+                  >
                     <FontAwesomeIcon icon={faYoutube} className="text-cyan-300 hover:text-gray-400 text-2xl" />
                   </a>
-                  <a href="https://www.tiktok.com/@joan.meikify" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://www.tiktok.com/@joan.meikify"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="TikTok Meikify"
+                  >
                     <FontAwesomeIcon icon={faTiktok} className="text-cyan-300 hover:text-gray-400 text-2xl" />
                   </a>
                 </div>
