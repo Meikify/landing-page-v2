@@ -5,28 +5,52 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
 
 export const metadata: Metadata = {
-  title: 'Meikify',
-  description: "Automatiza, optimiza y escala tu negocio con inteligencia artificial.",
-  generator: 'metras',
-  keywords: "automatización, inteligencia artificial, IA, chatbots, procesos, eficiencia, productividad",
+  title: 'Meikify | Automatización con IA para empresas',
+  description: "Descubre cómo los agentes inteligentes de Meikify liberan tiempo y potencian tus ingresos. Diagnóstico gratis.",
+  keywords: "automatización, inteligencia artificial, IA, chatbots, procesos, eficiencia, productividad, agentes inteligentes",
   authors: [{ name: "Meikify" }],
+  viewport: "width=device-width, initial-scale=1.0",
+  themeColor: "#071826",
+  appleWebApp: {
+    capable: true,
+    title: "Meikify"
+  },
+  alternates: {
+    canonical: "https://meikify.cl/",
+    languages: {
+      'es': 'https://meikify.cl/'
+    }
+  },
   openGraph: {
-    title: "Meikify - Automatización con IA para tu negocio",
-    description: "Automatiza, optimiza y escala tu negocio con inteligencia artificial.",
-    url: "https://meikify.cl",
+    title: "Meikify | Automatización con IA",
+    description: "Automatizamos tareas con agentes inteligentes para potenciar tu negocio.",
+    url: "https://meikify.cl/",
     siteName: "Meikify",
     locale: "es_CL",
     type: "website",
+    images: [
+      {
+        url: "https://meikify.cl/assets/logo-color.webp",
+        alt: "Meikify Logo"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Meikify - Automatización con IA para tu negocio",
-    description: "Automatiza, optimiza y escala tu negocio con inteligencia artificial.",
+    site: "@Meikify",
+    title: "Meikify | Automatización con IA",
+    description: "Automatizamos tareas con agentes inteligentes para potenciar tu negocio.",
+    images: ["https://meikify.cl/assets/logo-color.webp"]
   },
   robots: {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/images/favicon.ico",
+    apple: "/images/favicon-180x180.png"
+  },
+  manifest: "/manifest.json"
 }
 
 export default function RootLayout({
@@ -73,6 +97,36 @@ export default function RootLayout({
         href="/images/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16"
         href="/images/favicon-16x16.png" />
+        <script 
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "name": "Meikify",
+                  "url": "https://meikify.cl",
+                  "logo": "https://meikify.cl/assets/logo-color.webp",
+                  "contactPoint": [
+                    {
+                      "@type": "ContactPoint",
+                      "email": "hola@meikify.cl",
+                      "contactType": "customer support",
+                      "areaServed": "CL"
+                    }
+                  ]
+                },
+                {
+                  "@type": "WebPage",
+                  "url": "https://meikify.cl/",
+                  "name": "Meikify | Automatización con IA para empresas",
+                  "description": "Descubre cómo los agentes inteligentes de Meikify liberan tiempo y potencian tus ingresos. Diagnóstico gratis."
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         <noscript dangerouslySetInnerHTML={{ __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>` }} />
