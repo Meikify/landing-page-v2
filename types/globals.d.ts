@@ -1,7 +1,11 @@
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    fbq: (...args: any[]) => void;
+    grecaptcha: {
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+    fbq: (command: string, event: string, parameters?: any) => void;
+    gtag: (command: string, event: string, parameters?: any) => void;
+    dataLayer: any[];
   }
 }
 

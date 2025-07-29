@@ -36,11 +36,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons"
 import { CONFIG } from "@/lib/config"
 import Image from 'next/image'
-declare global {
-  interface Window {
-    grecaptcha: any
-  }
-}
+// Tipos globales ya están definidos en types/globals.d.ts
 
 // Agregar después de los imports
 const animationStyles = `
@@ -216,7 +212,14 @@ const animationStyles = `
 `
 
 // Componente de notificación con el diseño exacto de la imagen
-const Notification = ({ type, title, message, onClose }) => {
+interface NotificationProps {
+  type: string;
+  title: string;
+  message: string;
+  onClose: () => void;
+}
+
+const Notification: React.FC<NotificationProps> = ({ type, title, message, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-white rounded-2xl border-4 border-green-500 shadow-2xl max-w-md mx-4 animate-slide-in-top">
@@ -257,7 +260,7 @@ export default function MeikifyWebsite() {
   const [visibleMethodologyCards, setVisibleMethodologyCards] = useState(new Set())
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
-  const [notification, setNotification] = useState(null)
+  const [notification, setNotification] = useState<NotificationProps | null>(null)
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   // Palabras que cambian en el hero
   const heroWords = ["crezca", "fluya", "escale", "respire", "evolucione"]
@@ -273,9 +276,9 @@ export default function MeikifyWebsite() {
 
 
   // Función para mostrar notificaciones
-  const showNotification = (type, title, message) => {
+  const showNotification = (type: string, title: string, message: string) => {
     console.log("Notification:", type, title, message)
-    setNotification({ type, title, message })
+    setNotification({ type, title, message, onClose: () => setNotification(null) })
     // Auto-cerrar después de 6 segundos
     setTimeout(() => {
       setNotification(null)
@@ -390,7 +393,9 @@ export default function MeikifyWebsite() {
 
     try {
       // Execute reCAPTCHA v3
-      const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'submit'})
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (!siteKey) throw new Error('reCAPTCHA site key not configured');
+      const token = await window.grecaptcha.execute(siteKey, {action: 'submit'})
       setRecaptchaToken(token)
 
       // Obtener los datos del formulario
@@ -511,7 +516,7 @@ export default function MeikifyWebsite() {
                 className="hover:text-cyan-400 transition-colors cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault()
-                  const element = document.querySelector("#hero")
+                  const element = document.querySelector("#hero") as HTMLElement
                   if (element) {
                     const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                     window.scrollTo({
@@ -545,9 +550,9 @@ export default function MeikifyWebsite() {
                   className="relative text-white hover:text-cyan-600 font-medium transition-all duration-300 group"
                   onClick={(e) => {
                     e.preventDefault()
-                    const element = document.querySelector(item.href)
+                    const element = document.querySelector(item.href) as HTMLElement
                     if (element) {
-                      const elementPosition = (element as HTMLElement).offsetTop - CONFIG.HEADER_HEIGHT
+                      const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                       window.scrollTo({
                         top: elementPosition,
                         behavior: "smooth",
@@ -565,7 +570,7 @@ export default function MeikifyWebsite() {
                 className="text-white px-6 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
                 style={{ background: "linear-gradient(to right, #00bce7, #0ea5e9)" }}
                 onClick={() => {
-                  const element = document.querySelector("#diagnostico")
+                  const element = document.querySelector("#diagnostico") as HTMLElement
                   if (element) {
                     const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                     window.scrollTo({
@@ -616,7 +621,7 @@ export default function MeikifyWebsite() {
                     onClick={(e) => {
                       e.preventDefault()
                       setIsMenuOpen(false)
-                      const element = document.querySelector(item.href)
+                      const element = document.querySelector(item.href) as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
@@ -636,7 +641,7 @@ export default function MeikifyWebsite() {
                   style={{ background: "linear-gradient(to right, #00bce7, #0ea5e9)" }}
                   onClick={() => {
                     setIsMenuOpen(false)
-                    const element = document.querySelector("#diagnostico")
+                    const element = document.querySelector("#diagnostico") as HTMLElement
                     if (element) {
                       const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                       window.scrollTo({
@@ -707,7 +712,7 @@ export default function MeikifyWebsite() {
                   className="px-8 py-4 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                   onClick={() => {
                       setIsMenuOpen(false)
-                      const element = document.querySelector("#diagnostico")
+                      const element = document.querySelector("#diagnostico") as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
@@ -1511,7 +1516,7 @@ export default function MeikifyWebsite() {
                     className="hover:text-cyan-400 transition-colors cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault()
-                      const element = document.querySelector("#hero")
+                      const element = document.querySelector("#hero") as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
@@ -1530,7 +1535,7 @@ export default function MeikifyWebsite() {
                     className="hover:text-cyan-400 transition-colors cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault()
-                      const element = document.querySelector("#soluciones")
+                      const element = document.querySelector("#soluciones") as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
@@ -1549,7 +1554,7 @@ export default function MeikifyWebsite() {
                     className="hover:text-cyan-400 transition-colors cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault()
-                      const element = document.querySelector("#metodologia")
+                      const element = document.querySelector("#metodologia") as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
@@ -1568,7 +1573,7 @@ export default function MeikifyWebsite() {
                     className="hover:text-cyan-400 transition-colors cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault()
-                      const element = document.querySelector("#diagnostico")
+                      const element = document.querySelector("#diagnostico") as HTMLElement
                       if (element) {
                         const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
