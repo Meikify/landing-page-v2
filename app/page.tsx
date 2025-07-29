@@ -35,6 +35,7 @@ import {
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons"
 import { CONFIG } from "@/lib/config"
+import Image from 'next/image'
 declare global {
   interface Window {
     grecaptcha: any
@@ -414,6 +415,17 @@ export default function MeikifyWebsite() {
       
       if (response.ok) {
         showNotification("success", "¡Solicitud enviada!", "")
+        // Google Ads conversion tracking
+        if (
+          typeof window !== 'undefined' &&
+          (window as any).gtag &&
+          process.env.NEXT_PUBLIC_GOOGLE_ADS_ID &&
+          process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL
+        ) {
+          ;(window as any).gtag('event', 'conversion', {
+            send_to: `${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}/${process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL}`,
+          })
+        }
         ;(e.target as HTMLFormElement).reset()
         setRecaptchaToken(null)
       } else {
@@ -509,11 +521,13 @@ export default function MeikifyWebsite() {
                   }
                 }}
               >
-                <img
+                <Image
                   src="/images/meikify-logo.webp"
                   alt="Meikify Logo"
-                  className="w-auto object-contain"
-                  style={{ height: "36px" }}
+                  width={140}
+                  height={36}
+                  priority
+                  className="object-contain"
                 />
               </a>
             </div>
@@ -967,9 +981,11 @@ export default function MeikifyWebsite() {
               >
                 <CardContent className="p-8">
                   <div className="text-4xl mb-4 flex justify-center items-center">
-                    <img
+                    <Image
                       src={useCase.icon || "/placeholder.svg"}
                       alt={useCase.title}
+                      width={40}
+                      height={40}
                       loading="lazy"
                       className="w-[40px] h-[40px]"
                     />
@@ -1137,6 +1153,28 @@ export default function MeikifyWebsite() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section id="testimonios" className="py-24 bg-gradient-to-br from-white to-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {[
+              { quote: "Con Meikify optimizamos nuestros procesos y vimos resultados inmediatos.", author: "Ana G., Retail" },
+              { quote: "El equipo de Meikify nos permitió escalar con IA sin complicaciones.", author: "Carlos L., Legal" },
+              { quote: "Nuestra productividad subió un 50% gracias a su enfoque personalizado.", author: "María P., Tecnología" },
+            ].map((t, idx) => (
+              <div
+                key={idx}
+                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                <p className="text-slate-700 mb-4">&ldquo;{t.quote}&rdquo;</p>
+                <p className="text-slate-900 font-bold text-right">— {t.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Quién está detrás de Meikify */}
       <section
         id="fundador"
@@ -1174,12 +1212,13 @@ export default function MeikifyWebsite() {
 
                     {/* Contenedor de la imagen */}
                     <div className="relative bg-white rounded-3xl p-2 shadow-2xl">
-                      <div className="w-full h-[500px] rounded-2xl overflow-hidden">
-                        <img
+                      <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
+                        <Image
                           src="/images/joan_toro.jpeg"
                           alt="Joan Toro - Fundador de Meikify"
+                          fill
                           loading="lazy"
-                          className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+                          className="object-cover object-center hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                     </div>
@@ -1448,11 +1487,13 @@ export default function MeikifyWebsite() {
             {/* Logo and Tagline */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img
+                <Image
                   src="/images/meikify-logo.webp"
                   alt="Meikify Logo"
+                  width={160}
+                  height={40}
                   loading="lazy"
-                  className="h-10 w-auto object-contain"
+                  className="object-contain"
                 />
               </div>
               <p className="text-slate-300 leading-relaxed max-w-sm">
@@ -1540,6 +1581,16 @@ export default function MeikifyWebsite() {
                     Diagnóstico
                   </a>
                 </li>
+                <li>
+                  <a href="/privacidad" className="hover:text-cyan-400 transition-colors">
+                    Aviso de Privacidad
+                  </a>
+                </li>
+                <li>
+                  <a href="/terminos" className="hover:text-cyan-400 transition-colors">
+                    Términos de Servicio
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -1618,8 +1669,9 @@ export default function MeikifyWebsite() {
           "soluciones",
           "metodologia",
           "casos",
-          "fundador",
           "antes-despues",
+          "testimonios",
+          "fundador",
           "diagnostico",
           "contacto",
         ]}

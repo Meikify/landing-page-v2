@@ -97,7 +97,7 @@ export default function RootLayout({
         href="/images/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16"
         href="/images/favicon-16x16.png" />
-        <script 
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -105,6 +105,7 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "Organization",
+                  "@id": "https://meikify.cl/#organization",
                   "name": "Meikify",
                   "url": "https://meikify.cl",
                   "logo": "https://meikify.cl/assets/logo-color.webp",
@@ -122,6 +123,38 @@ export default function RootLayout({
                   "url": "https://meikify.cl/",
                   "name": "Meikify | Automatización con IA para empresas",
                   "description": "Descubre cómo los agentes inteligentes de Meikify liberan tiempo y potencian tus ingresos. Diagnóstico gratis."
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://meikify.cl/#website",
+                  "url": "https://meikify.cl/",
+                  "name": "Meikify",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://meikify.cl/?search={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "name": "Inicio",
+                      "item": "https://meikify.cl/"
+                    }
+                  ]
+                },
+                {
+                  "@type": "Service",
+                  "@id": "https://meikify.cl/#service",
+                  "serviceType": [
+                    "Automatización inteligente",
+                    "Chatbots IA",
+                    "Integración de sistemas"
+                  ],
+                  "provider": {"@id": "https://meikify.cl/#organization"}
                 }
               ]
             })
