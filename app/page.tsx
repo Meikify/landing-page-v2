@@ -534,6 +534,7 @@ export default function MeikifyWebsite() {
                     const element = document.querySelector(item.href)
                     if (element) {
                       const elementPosition = (element as HTMLElement).offsetTop - CONFIG.HEADER_HEIGHT
+                      window.scrollTo({
                         top: elementPosition,
                         behavior: "smooth",
                       })
