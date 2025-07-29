@@ -690,8 +690,7 @@ export default function MeikifyWebsite() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center py-6">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 px-8 py-4 rounded-full font-semibold transition-all duration-300 bg-transparent"
+                  className="px-8 py-4 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                   onClick={() => {
                       setIsMenuOpen(false)
                       const element = document.querySelector("#diagnostico")
@@ -706,8 +705,9 @@ export default function MeikifyWebsite() {
                       }
                     }}
                 >
-                  Diagnóstico gratuito
-                  <ArrowRight className="ml-2" size={20} />
+                  <Sparkles className="w-5 h-5" />
+                  <span>Diagnóstico gratuito</span>
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </div>
             </div>
