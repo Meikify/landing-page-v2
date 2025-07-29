@@ -34,6 +34,7 @@ import {
   faYoutube,
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons"
+import { CONFIG } from "@/lib/config"
 declare global {
   interface Window {
     grecaptcha: any
@@ -441,17 +442,13 @@ export default function MeikifyWebsite() {
     analytics.trackPageView("Meikify Homepage", window.location.href)
   }, [analytics])
 
-  const phoneNumber = "56958995317"
-  const message =
-    "¡Hola! Me interesa conocer más sobre cómo la automatización inteligente transforma cada aspecto de mi operación ¿Podrían ayudarme con información?"
 
   const handleWhatsAppClick = (source = "general") => {
     // Track WhatsApp click
     analytics.trackWhatsAppClick(source)
 
     // Crear la URL de WhatsApp
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`
-
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${CONFIG.PHONE_NUMBER}&text=${encodeURIComponent(CONFIG.WHATSAPP_MESSAGE)}`
     // Abrir en nueva ventana
     window.open(whatsappUrl, "_blank", "noopener,noreferrer")
   }
@@ -504,8 +501,7 @@ export default function MeikifyWebsite() {
                   e.preventDefault()
                   const element = document.querySelector("#hero")
                   if (element) {
-                    const headerHeight = 80
-                    const elementPosition = element.offsetTop - headerHeight
+                    const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                     window.scrollTo({
                       top: elementPosition,
                       behavior: "smooth",
@@ -537,9 +533,7 @@ export default function MeikifyWebsite() {
                     e.preventDefault()
                     const element = document.querySelector(item.href)
                     if (element) {
-                      const headerHeight = 80 // Altura aproximada del header
-                      const elementPosition = (element as HTMLElement).offsetTop - headerHeight
-                      window.scrollTo({
+                      const elementPosition = (element as HTMLElement).offsetTop - CONFIG.HEADER_HEIGHT
                         top: elementPosition,
                         behavior: "smooth",
                       })
@@ -558,8 +552,7 @@ export default function MeikifyWebsite() {
                 onClick={() => {
                   const element = document.querySelector("#diagnostico")
                   if (element) {
-                    const headerHeight = 80
-                    const elementPosition = element.offsetTop - headerHeight
+                    const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                     window.scrollTo({
                       top: elementPosition,
                       behavior: "smooth",
@@ -610,8 +603,7 @@ export default function MeikifyWebsite() {
                       setIsMenuOpen(false)
                       const element = document.querySelector(item.href)
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
@@ -631,8 +623,7 @@ export default function MeikifyWebsite() {
                     setIsMenuOpen(false)
                     const element = document.querySelector("#diagnostico")
                     if (element) {
-                      const headerHeight = 80
-                      const elementPosition = element.offsetTop - headerHeight
+                      const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                       window.scrollTo({
                         top: elementPosition,
                         behavior: "smooth",
@@ -704,8 +695,7 @@ export default function MeikifyWebsite() {
                       setIsMenuOpen(false)
                       const element = document.querySelector("#diagnostico")
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
@@ -1466,8 +1456,7 @@ export default function MeikifyWebsite() {
                       e.preventDefault()
                       const element = document.querySelector("#hero")
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
@@ -1486,8 +1475,7 @@ export default function MeikifyWebsite() {
                       e.preventDefault()
                       const element = document.querySelector("#soluciones")
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
@@ -1506,8 +1494,7 @@ export default function MeikifyWebsite() {
                       e.preventDefault()
                       const element = document.querySelector("#metodologia")
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
@@ -1526,8 +1513,7 @@ export default function MeikifyWebsite() {
                       e.preventDefault()
                       const element = document.querySelector("#diagnostico")
                       if (element) {
-                        const headerHeight = 80
-                        const elementPosition = element.offsetTop - headerHeight
+                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
                         window.scrollTo({
                           top: elementPosition,
                           behavior: "smooth",
