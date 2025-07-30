@@ -5,7 +5,9 @@
       "Bash(npm run lint)",
       "Bash(npx tsc:*)",
       "Bash(git restore:*)",
-      "Bash(timeout 30 npm run dev)"
+      "Bash(timeout 30 npm run dev)",
+      "Bash(cp:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
