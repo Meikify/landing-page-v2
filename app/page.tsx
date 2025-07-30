@@ -919,100 +919,6 @@ export default function MeikifyWebsite() {
           </div>
         </div>
       </section>
-      {/* Casos de Éxito*/}
-      <section id="casos" className="py-24 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-slate-900 mb-6">
-              Historias reales.{" "}
-              <span className="text-transparent bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text">
-                Resultados reales
-              </span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Así hemos transformado empresas como la tuya con soluciones medibles y sostenibles
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Atención al cliente 24/7",
-                description:
-                  "Desarrollamos un chatbot que atiende de manera autónoma las consultas de los clientes las 24 horas, los 7 días de la semana, resolviendo la mayoría de las interacciones sin intervención humana. Esto permitió a la empresa liberar a su equipo para enfocarse en tareas de mayor valor.",
-                metrics: [
-                  "80% de las consultas resueltas automáticamente",
-                  "Reducción de tiempos de respuesta a segundos",
-                  "Incremento en la satisfacción de los clientes",
-                ],
-                industry: "Servicios",
-                icon: "/images/robot_icon.png",
-              },
-              {
-                title: "Agente calificador de leads",
-                description:
-                  "Automatizamos la calificación de prospectos para priorizar los más valiosos, reduciendo el tiempo de seguimiento y aumentando significativamente la efectividad del equipo comercial.",
-                metrics: [
-                  "50% de aumento en la tasa de cierre",
-                  "Respuesta a leads en menos de 5 minutos",
-                  "Mejora en la calidad de los prospectos contactados",
-                ],
-                industry: "Legal",
-                icon: "/images/legal.png",
-              },
-              {
-                title: "Generación automática de imágenes",
-                description:
-                  "Implementamos un sistema que genera fotografías de productos en minutos con IA, eliminando la necesidad de sesiones fotográficas costosas y lentas. Esto permitió lanzar nuevos productos más rápido y con menor costo.",
-                metrics: [
-                  "Producción de imágenes en minutos",
-                  "Reducción de costos en más de 60%",
-                  "Mayor velocidad en lanzamientos y campañas",
-                ],
-                industry: "Retail",
-                icon: "/images/photo.png",
-              },
-            ].map((useCase, index) => (
-              <Card
-                key={index}
-                className={`hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${
-                  visibleSections.has("casos") ? `animate-fade-in-up animate-stagger-${index + 1}` : ""
-                }`}
-              >
-                <CardContent className="p-8">
-                  <div className="text-4xl mb-4 flex justify-center items-center">
-                    <Image
-                      src={useCase.icon || "/placeholder.svg"}
-                      alt={useCase.title}
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      className="w-[40px] h-[40px]"
-                    />
-                  </div>
-                  <div className="text-sm font-semibold mb-2 text-center" style={{ color: "#00bce7" }}>
-                    {useCase.industry}
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 text-center">{useCase.title}</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed text-sm  text-center sm:text-left">{useCase.description}</p>
-
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-slate-900 text-sm  text-center sm:text-left">Métricas clave:</h4>
-                    <ul className="space-y-1">
-                      {useCase.metrics.map((metric, metricIndex) => (
-                        <li key={metricIndex} className="text-sm text-slate-600 flex items-start  text-center sm:text-left">
-                          <span className="text-green-500 mr-2">•</span>
-                          <strong>{metric}</strong>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Before & After Automation Section */}
       <section
@@ -1153,27 +1059,6 @@ export default function MeikifyWebsite() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonios" className="py-24 bg-gradient-to-br from-white to-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
-          <div className="grid lg:grid-cols-3 gap-8">
-            {[
-              { quote: "Con Meikify optimizamos nuestros procesos y vimos resultados inmediatos.", author: "Ana G., Retail" },
-              { quote: "El equipo de Meikify nos permitió escalar con IA sin complicaciones.", author: "Carlos L., Legal" },
-              { quote: "Nuestra productividad subió un 50% gracias a su enfoque personalizado.", author: "María P., Tecnología" },
-            ].map((t, idx) => (
-              <div
-                key={idx}
-                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <p className="text-slate-700 mb-4">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-slate-900 font-bold text-right">— {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Quién está detrás de Meikify */}
       <section
