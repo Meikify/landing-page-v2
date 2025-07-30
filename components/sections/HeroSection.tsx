@@ -10,9 +10,10 @@ import type { AnalyticsTracker } from '@/types'
 
 interface HeroSectionProps {
   analytics: AnalyticsTracker
+  setIsMenuOpen: (open: boolean) => void
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ analytics }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ analytics, setIsMenuOpen }) => {
   const { scrollToSection } = useScrollToSection()
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
 
@@ -26,6 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ analytics }) => {
   }, [])
 
   const handleDiagnosticClick = () => {
+    setIsMenuOpen(false)
     scrollToSection("#diagnostico", analytics, { 
       buttonText: "Diagnóstico Gratis", 
       section: "hero" 

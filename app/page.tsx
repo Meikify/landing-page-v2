@@ -24,6 +24,8 @@ import { AntesDepuesSection } from "@/components/sections/AntesDepuesSection"
 import { FundadorSection } from "@/components/sections/FundadorSection"
 import { Header } from "@/components/sections/Header"
 import { Footer } from "@/components/sections/Footer"
+import { HeroSection } from "@/components/sections/HeroSection"
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faLinkedin,
@@ -253,23 +255,10 @@ export default function MeikifyWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState(0)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [visibleSections, setVisibleSections] = useState(new Set())
-  const [visibleMethodologyCards, setVisibleMethodologyCards] = useState(new Set())
+  const [visibleSections, setVisibleSections] = useState(new Set<string>())
+  const [visibleMethodologyCards, setVisibleMethodologyCards] = useState(new Set<string>())
   const videoRef = useRef<HTMLVideoElement | null>(null)
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [notification, setNotification] = useState<NotificationProps | null>(null)
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  // Palabras que cambian en el hero
-  const heroWords = ["crezca", "fluya", "escale", "respire", "evolucione"]
-
-  // Efecto para rotar palabras automáticamente
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % heroWords.length)
-    }, 3000) // Cambia cada 3 segundos
-
-    return () => clearInterval(interval)
-  }, [])
 
 
   // Función para mostrar notificaciones
@@ -325,14 +314,16 @@ export default function MeikifyWebsite() {
       (entries) => {
         entries.forEach((entry) => {
           const cardId = entry.target.getAttribute("data-card-id")
-          if (entry.isIntersecting) {
-            setVisibleMethodologyCards((prev) => new Set([...prev, cardId]))
-          } else {
-            setVisibleMethodologyCards((prev) => {
-              const newSet = new Set(prev)
-              newSet.delete(cardId)
-              return newSet
-            })
+          if (cardId) {
+            if (entry.isIntersecting) {
+              setVisibleMethodologyCards((prev) => new Set([...prev, cardId]))
+            } else {
+              setVisibleMethodologyCards((prev) => {
+                const newSet = new Set(prev)
+                newSet.delete(cardId)
+                return newSet
+              })
+            }
           }
         })
       },
@@ -377,79 +368,6 @@ export default function MeikifyWebsite() {
   }, [])
 
 
-    // Form submission handler
-   const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Mostrar estado de carga
-    const submitButton = document.querySelector('button[type="submit"]') as HTMLButtonElement
-    const originalText = submitButton.innerHTML
-    submitButton.innerHTML =
-      '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>Enviando...</div>'
-    submitButton.disabled = true
-
-    try {
-      // Execute reCAPTCHA v3
-      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-      if (!siteKey) throw new Error('reCAPTCHA site key not configured');
-      const token = await window.grecaptcha.execute(siteKey, {action: 'submit'})
-      setRecaptchaToken(token)
-
-      // Obtener los datos del formulario
-      const formData = new FormData(e.target as HTMLFormElement)
-      const data = {
-        nombre: formData.get("name") as string,
-        correo: formData.get("email") as string,
-        whatsapp: formData.get("whatsapp") as string,
-        empresa: formData.get("company") as string,
-        cargo: formData.get("position") as string,
-        tarea_proceso: formData.get("process") as string,
-        recaptcha_token: token,
-      }
-
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-      
-      if (response.ok) {
-        showNotification("success", "¡Solicitud enviada!", "")
-        // Google Ads conversion tracking
-        if (
-          typeof window !== 'undefined' &&
-          (window as any).gtag &&
-          process.env.NEXT_PUBLIC_GOOGLE_ADS_ID &&
-          process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL
-        ) {
-          ;(window as any).gtag('event', 'conversion', {
-            send_to: `${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}/${process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL}`,
-          })
-        }
-        ;(e.target as HTMLFormElement).reset()
-        setRecaptchaToken(null)
-      } else {
-        showNotification(
-          "error",
-          "Error de conexión 🌐",
-          `${response.status}`,
-        )
-      }
-    } catch (error) {
-      console.error("Error al enviar el formulario:", error)
-      showNotification(
-          "error",
-        "Error de conexión 🌐",
-        "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo o contáctanos directamente.",
-      )
-    } finally {
-      // Restaurar el botón
-      submitButton.innerHTML = originalText
-      submitButton.disabled = false
-    }
-  }
 
   // Track page view on mount
   useEffect(() => {
@@ -504,112 +422,22 @@ export default function MeikifyWebsite() {
 
       <Header analytics={analytics} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
-      {/* Revolutionary Hero */}
-      <section
-        id="hero"
-        className="relative py-4 flex items-center bg-gradient-to-br from-slate-50 via-white to-cyan-50"
-      >
-        <div className="container mx-auto px-6">
-          {/* Contenido centrado */}
-          <div className="text-center max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center space-x-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-sm font-medium">
-              <Sparkles size={16} />
-              <span>Revolución en automatización</span>
-            </div>
-            <div className="space-y-4">
-             {/* Título con rotación automática */}
-              <div className="relative min-h-[240px] lg:min-h-[300px] flex items-center justify-center">
-                <h1 className="text-5xl lg:text-7xl font-black leading-tight text-center">
-                  <span className="block text-slate-900 mb-4">
-                    Haz que tu negocio{" "}
-                    <div className="relative inline-block min-w-[280px] lg:min-w-[350px] align-top">
-                      {heroWords.map((word, index) => (
-                        <span
-                          key={index}
-                          className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-transparent bg-clip-text transition-all duration-1000 ${
-                            index === currentWordIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                          }`}
-                          style={{ backgroundImage: "linear-gradient(to right, #00bce7, #0ea5e9)" }}
-                        >
-                          {word}
-                        </span>
-                      ))}
-                    </div>
-                  </span>
-                  <span className="block text-slate-900 mt-4">solo.</span>
-                </h1>
-              </div>
-              <div className="max-w-2xl mx-auto space-y-6 mt-16">
-                <h2 className="text-2xl lg:text-3xl font-bold text-slate-800 leading-tight">
-                  Con IA y automatización real, no promesas.
-                </h2>
-                <p className="text-xl text-slate-600 leading-relaxed">
-                  Liberamos a tu equipo de lo repetitivo para que se concentre en lo que realmente importa:
-                  <strong> crecer, innovar y superar a la competencia</strong>.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center py-6">
-                <Button
-                  size="lg"
-                  className="px-8 py-4 text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
-                  onClick={() => {
-                      setIsMenuOpen(false)
-                      const element = document.querySelector("#diagnostico") as HTMLElement
-                      if (element) {
-                        const elementPosition = element.offsetTop - CONFIG.HEADER_HEIGHT
-                        window.scrollTo({
-                          top: elementPosition,
-                          behavior: "smooth",
-                        })
-                        // Track CTA click
-                        analytics.trackCTAClick("Diagnóstico Gratis", "mobile_menu")
-                      }
-                    }}
-                >
-                  <Sparkles className="w-5 h-5" />
-                  <span>Diagnóstico gratuito</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection analytics={analytics} setIsMenuOpen={setIsMenuOpen} />
 
-      <SolutionsSection visibleSections={visibleSections} analytics={analytics} />
+      <SolutionsSection visibleSections={visibleSections} />
 
       <MethodologySection visibleMethodologyCards={visibleMethodologyCards} />
       <CasosSection visibleSections={visibleSections} />
 
       <AntesDepuesSection visibleSections={visibleSections} />
 
-      {/* Testimonials */}
-      <section id="testimonios" className="py-24 bg-gradient-to-br from-white to-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
-          <div className="grid lg:grid-cols-3 gap-8">
-            {[
-              { quote: "Con Meikify optimizamos nuestros procesos y vimos resultados inmediatos.", author: "Ana G., Retail" },
-              { quote: "El equipo de Meikify nos permitió escalar con IA sin complicaciones.", author: "Carlos L., Legal" },
-              { quote: "Nuestra productividad subió un 50% gracias a su enfoque personalizado.", author: "María P., Tecnología" },
-            ].map((t, idx) => (
-              <div
-                key={idx}
-                className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <p className="text-slate-700 mb-4">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-slate-900 font-bold text-right">— {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection />
 
       <FundadorSection visibleSections={visibleSections} />
 
       <ContactFormSection 
-        handleFormSubmit={handleFormSubmit}
         analytics={analytics}
+        onShowNotification={showNotification}
       />
 
       {/* Futuristic CTA */}

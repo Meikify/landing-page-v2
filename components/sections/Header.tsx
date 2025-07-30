@@ -9,10 +9,11 @@ import type { AnalyticsTracker } from '@/types'
 
 interface HeaderProps {
   analytics: AnalyticsTracker
+  isMenuOpen: boolean
+  setIsMenuOpen: (open: boolean) => void
 }
 
-export const Header: React.FC<HeaderProps> = ({ analytics }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export const Header: React.FC<HeaderProps> = ({ analytics, isMenuOpen, setIsMenuOpen }) => {
   const { createScrollHandler, scrollToSection } = useScrollToSection()
 
   return (

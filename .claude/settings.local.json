@@ -7,7 +7,13 @@
       "Bash(git restore:*)",
       "Bash(timeout 30 npm run dev)",
       "Bash(cp:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(timeout 60 npm run build)",
+      "Bash(pkill:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout 10 npm run dev)",
+      "Bash(npm run dev:*)",
+      "Bash(wmic process where:*)"
     ],
     "deny": []
   }
