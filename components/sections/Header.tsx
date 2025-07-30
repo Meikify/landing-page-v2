@@ -56,9 +56,9 @@ export const Header: React.FC<HeaderProps> = ({ analytics, isMenuOpen, setIsMenu
             ))}
             <GradientButton
               size="default"
-              onClick={createScrollHandler("#diagnostico", analytics, { buttonText: "Diagnóstico Gratis", section: "header" })}
+              onClick={createScrollHandler("#diagnostico", analytics, { buttonText: "Diagnóstico Gratuito", section: "header" })}
             >
-              Diagnóstico Gratis
+              Diagnóstico Gratuito
             </GradientButton>
           </nav>
 

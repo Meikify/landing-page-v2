@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import { MessageSquare } from 'lucide-react'
+import { MessageSquare, Phone } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faLinkedin,
@@ -106,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ analytics, onWhatsAppClick }) =>
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <span className="text-cyan-400">📞</span>
+                <Phone className="w-5 h-5 text-cyan-400" />
                 <a
                   href="#"
                   onClick={() => onWhatsAppClick("footer")}

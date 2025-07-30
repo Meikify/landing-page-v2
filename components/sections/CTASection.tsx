@@ -69,7 +69,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
                   ;(e.target as HTMLElement).style.color = "#00bce7"
                 }}
               >
-                Diagnóstico Gratis
+                Diagnóstico Gratuito
               </Button>
             </div>
           </div>

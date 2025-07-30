@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import { USE_CASES } from '@/lib/constants'
-import Image from 'next/image'
 import type { VisibleSections } from '@/types'
 
 interface CasosSectionProps {
@@ -34,20 +33,15 @@ export const CasosSection: React.FC<CasosSectionProps> = ({ visibleSections }) =
               }`}
             >
               <CardContent className="p-8">
-                <div className="text-4xl mb-4 flex justify-center items-center">
-                  <Image
-                    src={useCase.icon || "/placeholder.svg"}
-                    alt={useCase.title}
-                    width={40}
-                    height={40}
-                    loading="lazy"
-                    className="w-[40px] h-[40px]"
-                  />
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-lg"></div>
+                  <div className="relative text-center py-4 px-6 rounded-lg">
+                    <div className="text-sm font-bold mb-1 text-cyan-600 uppercase tracking-wider">
+                      {useCase.industry}
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">{useCase.title}</h3>
+                  </div>
                 </div>
-                <div className="text-sm font-semibold mb-2 text-center" style={{ color: "#00bce7" }}>
-                  {useCase.industry}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4 text-center">{useCase.title}</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed text-sm text-center sm:text-left">{useCase.description}</p>
 
                 <div className="space-y-2">

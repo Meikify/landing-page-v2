@@ -84,7 +84,6 @@ export const USE_CASES = [
       "Incremento en la satisfacción de los clientes",
     ],
     industry: "Servicios",
-    icon: "/images/robot_icon.png",
   },
   {
     title: "Agente calificador de leads",
@@ -95,7 +94,6 @@ export const USE_CASES = [
       "Mejora en la calidad de los prospectos contactados",
     ],
     industry: "Legal",
-    icon: "/images/legal.png",
   },
   {
     title: "Generación automática de imágenes",
@@ -105,8 +103,7 @@ export const USE_CASES = [
       "Reducción de costos en más de 60%",
       "Mayor velocidad en lanzamientos y campañas",
     ],
-    industry: "Retail", 
-    icon: "/images/photo.png",
+    industry: "Retail",
   },
 ] as const;
 
