@@ -24,17 +24,20 @@ export const Header: React.FC<HeaderProps> = ({ analytics, isMenuOpen, setIsMenu
           <div className="flex items-center">
             <a
               href="#hero"
-              className="hover:text-cyan-400 transition-colors cursor-pointer"
+              className="hover:text-cyan-400 transition-all duration-300 cursor-pointer group relative"
               onClick={createScrollHandler("#hero")}
             >
-              <Image
-                src="/images/meikify-logo.webp"
-                alt="Meikify Logo"
-                width={140}
-                height={36}
-                priority
-                className="object-contain"
-              />
+              <div className="relative">
+                <Image
+                  src="/images/meikify-logo.webp"
+                  alt="Meikify Logo"
+                  width={200}
+                  height={52}
+                  priority
+                  className="object-contain transform group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/20 to-yellow-400/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+              </div>
             </a>
           </div>
 

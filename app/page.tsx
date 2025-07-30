@@ -33,7 +33,6 @@ export default function MeikifyWebsite() {
   
   // State
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [visibleSections, setVisibleSections] = useState(new Set<string>())
   const [visibleMethodologyCards, setVisibleMethodologyCards] = useState(new Set<string>())
   const [notification, setNotification] = useState<NotificationProps | null>(null)
@@ -72,9 +71,6 @@ export default function MeikifyWebsite() {
   }, [analytics])
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
     const video = videoRef.current
     const handleEnded = () => {
       setTimeout(() => {
@@ -87,8 +83,6 @@ export default function MeikifyWebsite() {
     if (video) {
       video.addEventListener("ended", handleEnded)
     }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   useEffect(() => {
@@ -170,16 +164,6 @@ export default function MeikifyWebsite() {
           onClose={closeNotification}
         />
       )}
-      {/* Floating Elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div
-          className="absolute w-96 h-96 bg-gradient-to-r from-yellow-400/20 to-cyan-400/20 rounded-full blur-3xl transition-all duration-1000"
-          style={{
-            left: mousePosition.x - 192,
-            top: mousePosition.y - 192,
-          }}
-        />
-      </div>
 
       <Header analytics={analytics} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 

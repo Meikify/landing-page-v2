@@ -31,8 +31,8 @@ export const Footer: React.FC<FooterProps> = ({ analytics, onWhatsAppClick }) =>
               <Image
                 src="/images/meikify-logo.webp"
                 alt="Meikify Logo"
-                width={160}
-                height={40}
+                width={200}
+                height={52}
                 loading="lazy"
                 className="object-contain"
               />
